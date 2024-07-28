@@ -1,0 +1,5 @@
+Flask
+pymongo
+Werkzeug
+Flask-PyMongo
+flask-cors
