@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 mongo = PyMongo()
 
+
 def create_app():
     app = Flask(__name__)
     CORS(app, resources={r'/*': {"origins": '*'}})
@@ -18,9 +19,17 @@ def create_app():
     from app.routes.bookmark_routes import bookmark_bp
     from app.routes.video_post_routes import videos_bp
     from app.routes.blog_post_routes import blogs_bp
+    from app.routes.community_routes import community_bp
+    from app.routes.community_analysis_routes import community_analysis_bp
+    from app.routes.tag_routes import tag_bp
+    from app.routes.search_routes import search_bp
     app.register_blueprint(user_bp)
     app.register_blueprint(bookmark_bp)
     app.register_blueprint(videos_bp)
     app.register_blueprint(blogs_bp)
+    app.register_blueprint(community_bp)
+    app.register_blueprint(community_analysis_bp)
+    app.register_blueprint(tag_bp)
+    app.register_blueprint(search_bp)
 
     return app

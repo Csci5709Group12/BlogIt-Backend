@@ -96,7 +96,7 @@ class User:
             mongo = MongoDB(Config.MONGO_URI, Config.DATABASE_NAME)
             collection = mongo.get_collection('users')
             user = collection.find_one({'_id': user_id})
-            return user
+            return convert_user_doc_to_user(user)
         except RuntimeError as e:
             print(f"Error: {e}")
             return None
@@ -151,6 +151,27 @@ class User:
             "profile_banner": self.profile_banner,
             "join_date": self.join_date.timestamp()
         }
+
+    @staticmethod
+    def get_users_by_ids(user_ids):
+        try:
+            print(f"Fetching users with IDs: {user_ids}")
+            mongo = MongoDB(Config.MONGO_URI, Config.DATABASE_NAME)
+            collection = mongo.get_collection('users')
+            
+            query = {'_id': {'$in': user_ids}}
+            user_docs = collection.find(query)
+            
+            users = [convert_user_doc_to_user(doc) for doc in user_docs]
+            print(f"Users fetched: {users}")
+            
+            return users
+        except RuntimeError as e:
+            print(f"Error: {e}")
+            return []
+        except PyMongoError as e:
+            print(f"MongoDB error while retrieving users: {e}")
+            return []
 
 def convert_user_doc_to_user(document):
     if document:

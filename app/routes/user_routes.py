@@ -91,7 +91,7 @@ def get_user(user_id):
     try:
         user = UserService.get_user_by_id(user_id)
         if user:
-            return jsonify(user), 200
+            return jsonify(user.to_dict()), 200
         else:
             return jsonify({'error': 'User not found'}), 404
     except Exception as e:

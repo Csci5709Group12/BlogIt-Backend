@@ -1,3 +1,4 @@
+# Author - Namrata Bhaumik (B00957053)
 from flask import Blueprint, request, jsonify
 from app.services.bookmark_service import BookmarkService
 
@@ -48,5 +49,17 @@ def remove_bookmark():
             return jsonify({'message': result['message']}), 200
         else:
             return jsonify({'error': result['message']}), 404
+    except Exception as e:
+        return jsonify({'error': f'An internal server error occurred: {e}'}), 500
+
+
+@bookmark_bp.route('/<user_id>', methods=['GET'])
+def get_bookmarks(user_id):
+    try:
+        result = BookmarkService.get_user_bookmarks(user_id)
+        if result['success']:
+            return jsonify({'bookmarks': result['bookmarks']}), 200
+        else:
+            return jsonify({'error': result['message']}), 500
     except Exception as e:
         return jsonify({'error': f'An internal server error occurred: {e}'}), 500

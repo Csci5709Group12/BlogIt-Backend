@@ -10,7 +10,8 @@ class VideoPostService:
         tags,
         time,
         thumbnail_url,
-        content
+        content,
+        community_id
     ):
         videoPost = VideoPost(
             video_post_id,
@@ -20,7 +21,8 @@ class VideoPostService:
             tags,
             time,
             thumbnail_url,
-            content
+            content,
+            community_id
         )
         videoPost.save()
 
@@ -33,8 +35,8 @@ class VideoPostService:
         return VideoPost.get_all_posts()
     
     @staticmethod
-    def get_post_by_user_id(user_id):
-        return VideoPost.get_post_by_user_id(user_id)
+    def get_posts_by_user_id(user_id):
+        return VideoPost.get_posts_by_user_id(user_id)
 
     @staticmethod
     def edit_post_by_id(video_post_id, updates):
