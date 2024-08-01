@@ -1,7 +1,7 @@
 from app.mongo import MongoDB
 from app.config import Config
 from pymongo.errors import PyMongoError
-from datetime import datetime
+from datetime import datetime, timezone
 
 class VideoPost:
     def __init__(
@@ -40,7 +40,7 @@ class VideoPost:
                 'thumbnail_url': self.thumbnail_url,
                 'content': self.content,
                 'community_id': self.community_id,
-                'timestamp': datetime.now(),
+                'timestamp': datetime.now(timezone.utc),
             })
             print(f"Video Post {self.title} saved successfully")
         except RuntimeError as e:
@@ -71,7 +71,7 @@ class VideoPost:
         try:
             mongo = MongoDB(Config.MONGO_URI, Config.DATABASE_NAME)
             collection = mongo.get_collection("video_posts")
-            doc = collection.find_one(query).sort("timestamp", -1)
+            doc = collection.find_one(query)
             if doc:
                 return convert_video_post_doc_to_video_post(doc)
             else:
