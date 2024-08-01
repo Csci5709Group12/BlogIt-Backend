@@ -144,8 +144,13 @@ class BlogPost:
             mongo = MongoDB(Config.MONGO_URI, Config.DATABASE_NAME)
             collection = mongo.get_collection('blog_posts')
             posts = list(collection.find({'author': user_id}))
+              # Process and convert timestamps
             for post in posts:
-                post["timestamp"] = post["timestamp"].timestamp()
+                print(f"Retrieved posts: {posts}")  # Debugging output
+                if 'timestamp' in post:
+                    timestamp = post['timestamp']
+                    if isinstance(timestamp, str):
+                        post['timestamp'] = timestamp
             posts = [post for post in posts]
             return posts
         except RuntimeError as e:
