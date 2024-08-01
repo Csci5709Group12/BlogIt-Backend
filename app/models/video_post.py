@@ -71,7 +71,7 @@ class VideoPost:
         try:
             mongo = MongoDB(Config.MONGO_URI, Config.DATABASE_NAME)
             collection = mongo.get_collection("video_posts")
-            doc = collection.find_one(query)
+            doc = collection.find_one(query).sort("timestamp", -1)
             if doc:
                 return convert_video_post_doc_to_video_post(doc)
             else:

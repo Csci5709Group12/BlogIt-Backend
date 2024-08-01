@@ -130,10 +130,11 @@ class Community:
             results = list(collection.find({
                 "community_name": {"$regex": query, "$options": "i"}
             }))
-            return [convert_community_doc_to_community(result) for result in results]
+            return [convert_community_doc_to_community(result).to_dict() for result in results]
         except PyMongoError as e:
             print(f"MongoDB error while searching communities: {e}")
             return []
+
             
 def convert_community_doc_to_community(document):
     if document:

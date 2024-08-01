@@ -163,7 +163,7 @@ class User:
             user_docs = collection.find(query)
             
             users = [convert_user_doc_to_user(doc) for doc in user_docs]
-            print(f"Users fetched: {users}")
+            # print(f"Users fetched: {users}")
             
             return users
         except RuntimeError as e:
@@ -172,6 +172,23 @@ class User:
         except PyMongoError as e:
             print(f"MongoDB error while retrieving users: {e}")
             return []
+
+    def to_dict(self):
+        return {
+            "id": self.user_id,
+            "username": self.username,
+            "email": self.email,
+            "name": self.name,
+            "web_url": self.web_url,
+            "location": self.location,
+            "bio": self.bio,
+            "pronouns": self.pronouns,
+            "education": self.education,
+            "work_status": self.work_status,
+            "profile_pic": self.profile_pic,
+            "profile_banner": self.profile_banner,
+            "join_date": self.join_date.timestamp()
+        }
 
 def convert_user_doc_to_user(document):
     if document:

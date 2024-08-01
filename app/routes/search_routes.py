@@ -12,6 +12,8 @@ def search_site():
     
     try:
         results = SearchService.search_site(query)
+        if not results['blog_posts'] and not results['communities']:
+            return jsonify({"message": "No results found"}), 404
         return jsonify(results), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

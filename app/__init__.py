@@ -23,6 +23,8 @@ def create_app():
     from app.routes.community_analysis_routes import community_analysis_bp
     from app.routes.tag_routes import tag_bp
     from app.routes.search_routes import search_bp
+    from app.routes.comment_routes import comment_bp
+    from app.routes.follow_user_routes import follow_users_bp
     app.register_blueprint(user_bp)
     app.register_blueprint(bookmark_bp)
     app.register_blueprint(videos_bp)
@@ -31,5 +33,7 @@ def create_app():
     app.register_blueprint(community_analysis_bp)
     app.register_blueprint(tag_bp)
     app.register_blueprint(search_bp)
+    app.register_blueprint(comment_bp)
+    app.register_blueprint(follow_users_bp)
 
     return app

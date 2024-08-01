@@ -324,7 +324,7 @@ class CommunityAnalysisService:
         :param location: Location address
         :returns: Country code or 'Unknown' if not found
         """
-        api_key = 'AIzaSyCm4VRL32Ubh9ff0S-N8idhvHaEKrUrcgA'  # Replace with your Google API Key
+        api_key = 'AIzaSyC5XsSwdxAj_vrjLI4HqYiMzmgQ9YxlpBE'  # Replace with your Google API Key
         base_url = 'https://maps.googleapis.com/maps/api/geocode/json'
         
         print(f"Geocoding location: {location}")
@@ -434,12 +434,16 @@ class CommunityAnalysisService:
                 print("Community not found")
                 return {"result": "error", "message": "Community not found"}
 
-            # Get the list of member user IDs
-            member_ids = community.community_members_list
-            print(f"Member IDs: {member_ids}")
+             # Get the list of member user IDs and add admin ID
+            member_ids = set(community.community_members_list)  # Use a set to avoid duplicates
+            admin_id = community.admin
+            if admin_id:
+                member_ids.add(admin_id)
+            
+            print(f"Member IDs including admin: {member_ids}")
 
-            # Fetch user details for each member
-            users = User.get_users_by_ids(member_ids)
+            # Fetch user details for each member including admin
+            users = User.get_users_by_ids(list(member_ids))
             print(f"Users fetched: {users}")
 
             # Fixed location distribution

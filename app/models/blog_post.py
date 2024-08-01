@@ -98,7 +98,7 @@ class BlogPost:
             print(f"Querying with filter: {query}")  # Debugging output
 
             # Retrieve posts based on the query
-            posts = list(collection.find(query))
+            posts = list(collection.find(query).sort("timestamp", -1))
             
             # Process and convert timestamps
             

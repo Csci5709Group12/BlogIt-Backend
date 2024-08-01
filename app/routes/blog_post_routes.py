@@ -64,7 +64,7 @@ def get_all_videos():
         community_id = request.args.get('community_id')  # Get community_id from query parameters
         print(f"community_id: {community_id}")
         blogs = BlogPostService.get_all_blogs(community_id)
-        print(f"get_all_blogs: {blogs}")
+        # print(f"get_all_blogs: {blogs}")
         return jsonify({'message': 'Retrieved Blogs successfully', 'blogs': blogs}), 200
     except Exception as e:
         return jsonify({'error': 'An internal server error occurred: ' + str(e)}), 500
